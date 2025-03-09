@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/Services/prisma.service';
 import { CreateUserDto } from './dto/createUser.dto';
+import { Roles } from 'src/enums/Roles';
 
 @Injectable()
 export class UserService {
@@ -34,7 +35,7 @@ export class UserService {
         data: {
           name: data.name,
           email: data.email,
-          role_id: data.role_id,
+          role_id: Roles.ADMIN,
         },
       });
     } catch (error) {
