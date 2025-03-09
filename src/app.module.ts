@@ -5,6 +5,7 @@ import { SaleModule } from './App/sale/sale.module';
 import { InvoiceModule } from './App/invoice/invoice.module';
 import { CompanyModule } from './App/company/company.module';
 import { AiModule } from './App/ai/ai.module';
+import { PrismaService } from './Services/prisma.service';
 
 @Module({
   imports: [
