@@ -6,6 +6,7 @@ import { InvoiceModule } from './App/invoice/invoice.module';
 import { CompanyModule } from './App/company/company.module';
 import { AiModule } from './App/ai/ai.module';
 import { PrismaService } from './Services/prisma.service';
+import { ExcelModule } from './excel/excel.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { PrismaService } from './Services/prisma.service';
     InvoiceModule,
     CompanyModule,
     AiModule,
+    ExcelModule,
   ],
 })
 export class AppModule {}
