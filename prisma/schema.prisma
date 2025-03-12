@@ -14,22 +14,20 @@ datasource db {
 }
 
 model user {
-  id             Int              @id @default(autoincrement())
-  name           String
-  email          String           @unique
-  role_id        Int
-  identification Int?
-  client_company client_company[]
-
-  sales     sale[]
-  companies company[] @relation("owner_company")
-  role      role      @relation(fields: [role_id], references: [id])
-}
-
-model role {
   id    Int    @id @default(autoincrement())
   name  String
-  users user[]
+  email String @unique
+
+  sales     sale[]
+  companies company[]
+}
+
+model client {
+  id             Int              @id @default(autoincrement())
+  name           String
+  identification String           @unique
+  email          String?          @unique
+  client_company client_company[]
 }
 
 model client_company {
@@ -37,8 +35,8 @@ model client_company {
   company_id Int
   client_id  Int
 
+  client  client  @relation(fields: [client_id], references: [id])
   company company @relation(fields: [company_id], references: [id])
-  client  user    @relation(fields: [client_id], references: [id])
 }
 
 model company {
@@ -50,7 +48,7 @@ model company {
   active     Boolean          @default(true)
   clients    client_company[]
   field      field            @relation(fields: [field_id], references: [id])
-  owner      user             @relation(fields: [owner_id], references: [id], name: "owner_company")
+  owner      user             @relation(fields: [owner_id], references: [id])
 }
 
 model field {

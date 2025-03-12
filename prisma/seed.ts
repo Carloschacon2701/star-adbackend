@@ -1,16 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 
-const roles = [
-  {
-    id: 1,
-    name: 'Admin',
-  },
-  {
-    id: 2,
-    name: 'client',
-  },
-];
-
 const fields = [
   {
     name: 'technology',
@@ -40,14 +29,6 @@ const fields = [
 const prisma = new PrismaClient();
 
 async function main() {
-  for (const role of roles) {
-    await prisma.role.create({
-      data: role,
-    });
-
-    console.log(`Role ${role.name} created`);
-  }
-
   for (const field of fields) {
     await prisma.field.create({
       data: field,

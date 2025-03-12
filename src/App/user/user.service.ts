@@ -3,9 +3,8 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/Services/prisma.service';
+import { PrismaService } from 'src/Services/DB/prisma.service';
 import { CreateUserDto } from './dto/createUser.dto';
-import { Roles } from 'src/enums/Roles';
 
 @Injectable()
 export class UserService {
@@ -35,7 +34,6 @@ export class UserService {
         data: {
           name: data.name,
           email: data.email,
-          role_id: Roles.ADMIN,
         },
       });
     } catch (error) {

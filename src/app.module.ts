@@ -5,8 +5,9 @@ import { SaleModule } from './App/sale/sale.module';
 import { InvoiceModule } from './App/invoice/invoice.module';
 import { CompanyModule } from './App/company/company.module';
 import { AiModule } from './App/ai/ai.module';
-import { PrismaService } from './Services/prisma.service';
-import { ExcelModule } from './excel/excel.module';
+import { ExcelModule } from './App/excel/excel.module';
+import { AwsModule } from './Services/AWS/aws.module';
+import { PrismaModule } from './Services/DB/prisma.module'; // Import the PrismaModule
 
 @Module({
   imports: [
@@ -17,6 +18,8 @@ import { ExcelModule } from './excel/excel.module';
     CompanyModule,
     AiModule,
     ExcelModule,
+    AwsModule,
+    PrismaModule, // Add PrismaModule to imports
   ],
 })
 export class AppModule {}
