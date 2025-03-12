@@ -8,7 +8,7 @@ import {
 import { AwsConfig } from 'src/Services/AWS/aws.config';
 
 @Injectable()
-export class AuthService {
+export class CognitoService {
   constructor(
     @Inject('AWS_COGNITO_CLIENT')
     private cognitoClient: CognitoIdentityProviderClient,
