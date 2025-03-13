@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/Services/DB/prisma.service';
+import { createCompanyDto } from './dto/createCompany.dto';
 
 @Injectable()
 export class CompanyService {
@@ -45,7 +46,7 @@ export class CompanyService {
     });
   }
 
-  async createCompany(data: any) {
+  async createCompany(data: createCompanyDto) {
     const existingCompany = await this.prisma.company.findFirst({
       where: {
         name: data.name,
