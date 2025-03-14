@@ -6,6 +6,7 @@ import {
   ConfirmSignUpCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 import { AwsConfig } from 'src/Services/AWS/aws.config';
+import { CognitoJwtVerifier, JwtVerifier } from 'aws-jwt-verify';
 
 @Injectable()
 export class CognitoService {
@@ -32,5 +33,19 @@ export class CognitoService {
       ConfirmationCode: confirmationCode,
     });
     return this.cognitoClient.send(command);
+  }
+
+  async verifyToken(token: string) {
+    const verifier = CognitoJwtVerifier.create({
+      userPoolId: this.awsConfig.cognitoUserPoolId,
+      clientId: this.awsConfig.cognitoClientId,
+      tokenUse: this.awsConfig.tokenUse as 'id' | 'access',
+    });
+
+    const payload = await verifier.verify(token);
+    console.log('Token is valid. Payload:', payload);
+    return {
+      user_id: payload?.['custom:id'],
+    };
   }
 }

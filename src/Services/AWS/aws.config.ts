@@ -25,4 +25,8 @@ export class AwsConfig {
   get cognitoClientId(): string {
     return this.configService.get<string>('COGNITO_CLIENT_ID') ?? '';
   }
+
+  get tokenUse(): string {
+    return 'id';
+  }
 }

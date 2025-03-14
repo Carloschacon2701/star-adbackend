@@ -14,23 +14,29 @@ export class CompanyService {
     });
   }
 
-  async getSingleCompany(company_id: number) {
+  async getSingleCompany(user_id: number, company_id: number) {
     return await this.prisma.company.findUnique({
       where: {
         id: company_id,
+        owner_id: user_id,
       },
     });
   }
 
-  async removeCompany(company_id: number) {
+  async removeCompany(user_id: number, company_id: number) {
     const company = await this.prisma.company.findUnique({
       where: {
         id: company_id,
+        owner_id: user_id,
       },
       select: {
         active: true,
       },
     });
+
+    if (!company) {
+      throw new BadRequestException("Company doesn't exist for this user");
+    }
 
     if (!company?.active) {
       throw new BadRequestException('Company is already inactive');
@@ -46,11 +52,11 @@ export class CompanyService {
     });
   }
 
-  async createCompany(data: createCompanyDto) {
+  async createCompany(user_id: number, data: createCompanyDto) {
     const existingCompany = await this.prisma.company.findFirst({
       where: {
         name: data.name,
-        owner_id: data.owner_id,
+        owner_id: user_id,
       },
     });
 
@@ -61,7 +67,7 @@ export class CompanyService {
     return await this.prisma.company.create({
       data: {
         field_id: data.field_id,
-        owner_id: data.owner_id,
+        owner_id: user_id,
         name: data.name,
       },
     });

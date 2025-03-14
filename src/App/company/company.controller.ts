@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { createCompanyDto } from './dto/createCompany.dto';
 import { CompanyService } from './company.service';
+import { UserId } from 'src/decorators/user.decorator';
 
 @Controller('company')
 export class CompanyController {
@@ -17,18 +18,18 @@ export class CompanyController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async postCompany(data: createCompanyDto) {
-    return await this.service.createCompany(data);
+  async postCompany(@UserId() user_id: number, data: createCompanyDto) {
+    return await this.service.createCompany(user_id, data);
   }
 
   @Get()
-  async getCompanies() {
-    return await this.service.getCompanies(1);
+  async getCompanies(@UserId() user_id: number) {
+    return await this.service.getCompanies(user_id);
   }
 
   @Get(':id')
-  async getCompany(@Param('id') id: number) {
-    return await this.service.getSingleCompany(id);
+  async getCompany(@UserId() user_id: number, @Param('id') id: number) {
+    return await this.service.getSingleCompany(user_id, id);
   }
 
   @Put(':id')
@@ -37,7 +38,7 @@ export class CompanyController {
   }
 
   @Delete(':id')
-  deleteCompany(@Param('id') id: number) {
-    return this.service.removeCompany(id);
+  deleteCompany(@UserId() user_id: number, @Param('id') id: number) {
+    return this.service.removeCompany(user_id, id);
   }
 }
