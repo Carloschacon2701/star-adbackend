@@ -18,37 +18,30 @@ model user {
   name  String
   email String @unique
 
-  sales     sale[]
   companies company[]
 }
 
 model client {
-  id             Int              @id @default(autoincrement())
+  id             Int     @id @default(autoincrement())
   name           String
-  identification String           @unique
-  email          String?          @unique
-  client_company client_company[]
-}
-
-model client_company {
-  id         Int @id @default(autoincrement())
-  company_id Int
-  client_id  Int
-
-  client  client  @relation(fields: [client_id], references: [id])
-  company company @relation(fields: [company_id], references: [id])
+  company_id     Int
+  identification String  @unique
+  email          String? @unique
+  sales          sale[]
+  company        company @relation(fields: [company_id], references: [id])
 }
 
 model company {
-  id         Int              @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
   owner_id   Int
-  created_at DateTime         @default(now())
+  created_at DateTime  @default(now())
   field_id   Int
-  active     Boolean          @default(true)
-  clients    client_company[]
-  field      field            @relation(fields: [field_id], references: [id])
-  owner      user             @relation(fields: [owner_id], references: [id])
+  active     Boolean   @default(true)
+  field      field     @relation(fields: [field_id], references: [id])
+  owner      user      @relation(fields: [owner_id], references: [id])
+  product    product[]
+  client     client[]
 }
 
 model field {
@@ -60,35 +53,40 @@ model field {
 model sale {
   id         Int      @id @default(autoincrement())
   date       DateTime @default(now())
-  amount     Decimal
+  amount     Int
+  total      Float
   product_id Int
   product    product  @relation(fields: [product_id], references: [id])
   client_id  Int
-  client     user     @relation(fields: [client_id], references: [id])
+  client     client   @relation(fields: [client_id], references: [id])
 }
 
 model product {
   id          Int             @id @default(autoincrement())
   name        String
   description String
-  price       Decimal
+  price       Float
+  company_id  Int
+  company     company         @relation(fields: [company_id], references: [id])
   sales       sale[]
   stocks      product_stock[]
 }
 
 model stock {
   id              Int             @id @default(autoincrement())
-  amount          Decimal
-  previous_amount Decimal
+  amount          Int
+  previous_amount Int
   product_stock   product_stock[]
 }
 
 model product_stock {
-  id         Int     @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  active     Boolean  @default(true)
   product_id Int
   stock_id   Int
-  product    product @relation(fields: [product_id], references: [id])
-  stock      stock   @relation(fields: [stock_id], references: [id])
+  product    product  @relation(fields: [product_id], references: [id])
+  stock      stock    @relation(fields: [stock_id], references: [id])
 }
 
 model invoice {
