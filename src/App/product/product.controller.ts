@@ -46,6 +46,15 @@ export class ProductController {
     return await this.productService.updateProduct(user_id, id, data);
   }
 
+  @Put(':id/stock')
+  async updateProductStock(
+    @UserId() user_id: number,
+    @Param('id') id: number,
+    @Body() data: { stock: number },
+  ) {
+    return await this.productService.updateProductStock(user_id, id, data);
+  }
+
   @Delete(':id')
   async deleteProduct(@UserId() user_id: number, @Param('id') id: number) {
     return await this.productService.deleteProduct(user_id, id);
