@@ -52,6 +52,15 @@ export class CompanyService {
     });
   }
 
+  async getFields() {
+    return await this.prisma.field.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  }
+
   async createCompany(user_id: number, data: createCompanyDto) {
     const existingCompany = await this.prisma.company.findFirst({
       where: {

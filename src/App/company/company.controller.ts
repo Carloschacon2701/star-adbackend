@@ -11,6 +11,7 @@ import {
 import { createCompanyDto } from './dto/createCompany.dto';
 import { CompanyService } from './company.service';
 import { UserId } from 'src/decorators/user.decorator';
+import { Public } from 'src/decorators/publicRoute.decorator';
 
 @Controller('company')
 export class CompanyController {
@@ -25,6 +26,12 @@ export class CompanyController {
   @Get()
   async getCompanies(@UserId() user_id: number) {
     return await this.service.getCompanies(user_id);
+  }
+
+  @Get('fields')
+  @Public()
+  async getFields() {
+    return await this.service.getFields();
   }
 
   @Get(':id')

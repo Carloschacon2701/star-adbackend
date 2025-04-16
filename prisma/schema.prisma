@@ -14,9 +14,10 @@ datasource db {
 }
 
 model user {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
+  id       Int    @id @default(autoincrement())
+  name     String
+  lastName String
+  email    String @unique
 
   companies company[]
 }

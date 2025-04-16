@@ -16,11 +16,13 @@ export class CognitoService {
     private awsConfig: AwsConfig,
   ) {}
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string) {
+    const randomPassword = Math.random().toString(36).slice(-8);
+
     const command = new SignUpCommand({
       ClientId: this.awsConfig.cognitoClientId,
       Username: email,
-      Password: password,
+      Password: randomPassword,
       UserAttributes: [{ Name: 'email', Value: email }],
     });
     return this.cognitoClient.send(command);
