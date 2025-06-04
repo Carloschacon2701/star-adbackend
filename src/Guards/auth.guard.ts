@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     try {
-      const payload = this.cognito.verifyToken(token);
+      const payload = await this.cognito.verifyToken(token);
       console.log(payload);
       request['user'] = payload;
     } catch {
